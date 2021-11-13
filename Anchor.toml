@@ -1,0 +1,12 @@
+[programs.localnet]
+gif_project_sol = "2rdbMWwNqo7TrKpFeM5xFzVCxD9xz9WehdhsnwF9yMdu"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "/Users/nicholas-g/.config/solana/id.json"
+
+[scripts]
+test = "yarn run mocha -t 1000000 tests/gif-list-test.js"
