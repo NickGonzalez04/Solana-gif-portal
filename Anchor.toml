@@ -1,11 +1,11 @@
-[programs.localnet]
-gif_project_sol= "H1XSeK4joK6pEF4sUd8oyBo53rhHpE7ARFpWN3uAr144"
+[programs.devnet]
+gif_project_sol= "9D52gsXrqC8RvaSVvmYXKVbnhhVSkVVJ2RGpEuRq9AVa"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

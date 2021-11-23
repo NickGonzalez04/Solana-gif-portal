@@ -2,15 +2,14 @@ use anchor_lang::prelude::*;
 use anchor_lang::AccountsClose;
 
 // our program_id to run the program in Solana
-declare_id!("H1XSeK4joK6pEF4sUd8oyBo53rhHpE7ARFpWN3uAr144");
+declare_id!("9D52gsXrqC8RvaSVvmYXKVbnhhVSkVVJ2RGpEuRq9AVa");
 
 
 #[program]
 pub mod gifprojectsol {
     use super::*;
     pub fn init_list(ctx: Context<InitList>, bump: u8) -> ProgramResult {
-        // Getting reference to the account
-        // `mut` allows for an immutable reference to the base account (in order to make changes to it)
+        // Gets account
         let base_account = &mut ctx.accounts.base_account;
         base_account.bump = bump;
         base_account.gif_list = Vec::new();
@@ -47,9 +46,20 @@ pub mod gifprojectsol {
         gif.upvotes += 1;
         Ok(())
     }
+
+    // Downvote gif
+    pub fn down_vote_gif(ctx: Context<AddNewGif>, gif_link: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+        let gif = base_account
+            .gif_list
+            .iter_mut()
+            .find(|gif| gif.gif_link == gif_link)
+            .ok_or(Err::NoGifFound)?;
+        gif.upvotes -= 1;
+        Ok(())
 }
 
-
+}
 
 #[error]
 pub enum Err {
@@ -62,7 +72,7 @@ pub enum Err {
 #[instruction(bump: u8)]
     pub struct InitList<'info> {
         #[account(init, payer=user, seeds=[
-            b"ngGif2",
+            b"ngGif3",
             user.to_account_info().key.as_ref()],
             bump=bump,
             space = 9000)]
@@ -76,7 +86,7 @@ pub enum Err {
 #[derive(Accounts)]
 pub struct DeleteList<'info> {
     #[account(mut, seeds=[
-        b"ngGif2",
+        b"ngGif3",
         user.to_account_info().key.as_ref()], 
         bump=base_account.bump
     )]
@@ -91,7 +101,7 @@ pub struct DeleteList<'info> {
  #[derive(Accounts)]
     pub struct AddNewGif<'info> {
         #[account(mut, seeds=[
-        b"ngGif2",
+        b"ngGif3",
         list_owner.to_account_info().key.as_ref()  
         ], bump=base_account.bump)]
         pub base_account: Account<'info, BaseAccount>,

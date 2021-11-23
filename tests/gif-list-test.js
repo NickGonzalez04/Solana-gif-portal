@@ -10,8 +10,8 @@ describe('gif-project-sol', ()=>{
   const program = anchor.workspace.Gifprojectsol;
 
   const getBaseAcct = async () => {
-    let [baseAccount, bump] = await web3.PublicKey.findProgramAddress(
-      [Buffer.from("ngGif2"), 
+    let [baseAccount, bump] = await anchor.web3.PublicKey.findProgramAddress(
+      [Buffer.from("ngGif3"), 
       provider.wallet.publicKey.toBytes()],
       program.programId
     );
@@ -34,7 +34,7 @@ describe('gif-project-sol', ()=>{
     return { baseAccount, account };
   };
 
-
+3
     it('Creates new gif list', async () => {
       console.log('🚀 new gif list coming ...');
       const { account } = await newGifList();
@@ -50,7 +50,7 @@ describe('gif-project-sol', ()=>{
         console.log("GIT TOTAL--", account.gifList.length);
     
         // add in a new gift 
-        await program.rpc.addNewGif("https://giphy.com/clips/grinchmovie-grinch-illumination-movie-Y0NhkIdyT3TVBDWLkG", {
+        await program.rpc.addNewGif("https://media.giphy.com/media/BPcL0fnVqoBGwfcJxs/giphy.gif", {
             accounts: {
               baseAccount,
               listOwner: provider.wallet.publicKey,
